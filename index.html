@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F7F8FB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11162A" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Our Rosary">
+<title>Our Holy Rosary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F8FB; --ink:#1C2440; --soft:#4A5272; --rubric:#9C2F27;
+  --gilt:#A47426; --lapis:#2D4A86; --wash:#ECEFF6; --line:#D5DAE6;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11162A; --ink:#E9E6DD; --soft:#AEB3C6; --rubric:#E08A7F;
+    --gilt:#D9AE62; --lapis:#9DB4E6; --wash:#1A2140; --line:#2C3557;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11162A; --ink:#E9E6DD; --soft:#AEB3C6; --rubric:#E08A7F;
+  --gilt:#D9AE62; --lapis:#9DB4E6; --wash:#1A2140; --line:#2C3557;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 12px);-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  font-size:1.18rem; line-height:1.6;
+}
+main{max-width:34rem; margin:0 auto; padding:0 1.35rem 4rem}
+
+/* Cover */
+.cover{padding:3.2rem 0 2.2rem; text-align:center; border-bottom:1px solid var(--line)}
+.cross{color:var(--gilt); font-size:1.6rem; line-height:1; margin-bottom:1rem}
+.cover h1{
+  font-weight:400; font-style:italic; font-size:clamp(2.6rem, 11vw, 3.5rem);
+  line-height:1.02; margin:0 0 .9rem; color:var(--lapis); letter-spacing:-.01em;
+}
+.cover p{margin:.2rem auto; max-width:24rem; color:var(--soft); font-size:1.05rem}
+.cover .for{margin-top:1.2rem; font-style:italic}
+
+/* Settings (app only) */
+.setup{margin:1.6rem 0 0; padding:1rem 1.1rem; background:var(--wash); border-radius:10px; text-align:left}
+.setup label{display:block; font-size:1rem; color:var(--soft); margin-bottom:.35rem}
+.setup input{
+  width:100%; font:inherit; font-size:1.1rem; color:var(--ink); background:var(--paper);
+  border:1px solid var(--line); border-radius:8px; padding:.5rem .7rem;
+}
+.setup input:focus{outline:2px solid var(--lapis); outline-offset:1px}
+.today{margin-top:.8rem; font-size:1rem; color:var(--soft)}
+.today b{color:var(--ink); font-weight:600}
+
+/* Contents */
+.toc{padding:1.6rem 0 .6rem; border-bottom:1px solid var(--line)}
+.toc ol{margin:0; padding:0; list-style:none; columns:2; column-gap:1.2rem; font-size:1rem}
+.toc li{break-inside:avoid; margin:.12rem 0}
+.toc a{color:var(--lapis); text-decoration:none}
+.toc a:focus-visible{outline:2px solid var(--lapis)}
+.toc .mine a{color:var(--gilt)}
+
+/* Sections */
+section{padding:1.9rem 0 .4rem}
+h2{
+  font-weight:500; font-size:1.5rem; line-height:1.2; margin:0 0 .7rem; color:var(--ink);
+  display:flex; gap:.6rem; align-items:baseline;
+}
+h2 .n{color:var(--gilt); font-size:1.05rem; font-weight:500; min-width:1.4rem}
+h3{font-weight:500; font-size:1.25rem; margin:1.6rem 0 .4rem; color:var(--lapis)}
+p{margin:0 0 .85rem}
+.rubric{color:var(--rubric); font-style:italic; font-size:1.02rem}
+.vr{margin:0 0 .3rem}
+.vr b{color:var(--rubric); font-weight:600; margin-right:.25rem}
+.prayer{margin:0 0 .9rem}
+
+/* Our own petitions: the one bold device */
+.ours{
+  border-left:3px solid var(--gilt); padding:.2rem 0 .2rem 1.05rem; margin-left:-1.1rem;
+}
+.ours .mark{color:var(--gilt); font-style:italic; font-size:1rem; margin:-.1rem 0 .5rem}
+.names{font-style:italic}
+
+/* Decades */
+.decade{padding:1rem 0 .8rem; border-top:1px dashed var(--line)}
+.decade:first-of-type{border-top:0}
+.decade h3{margin-top:.2rem}
+.announce{color:var(--rubric); font-style:italic; font-size:1.02rem; margin-bottom:.5rem}
+.announce .blank{display:inline-block; min-width:7.5rem; border-bottom:1px solid var(--rubric); opacity:.6}
+.intent{margin-bottom:.6rem}
+.seq{font-size:1rem; color:var(--soft)}
+.beads{display:flex; flex-wrap:wrap; gap:.45rem; align-items:center; margin:.7rem 0 .2rem}
+.bead{
+  width:2.1rem; height:2.1rem; border-radius:50%; border:1.5px solid var(--lapis);
+  background:transparent; padding:0; cursor:pointer; color:var(--paper);
+  font:inherit; font-size:.85rem; display:grid; place-items:center;
+  -webkit-tap-highlight-color:transparent; transition:background .15s;
+}
+.bead.on{background:var(--lapis)}
+.bead.pater{border-radius:7px; border-color:var(--gilt)}
+.bead.pater.on{background:var(--gilt)}
+.bead:focus-visible{outline:2px solid var(--gilt); outline-offset:2px}
+.reset{
+  font:inherit; font-size:.95rem; color:var(--soft); background:none; border:0;
+  text-decoration:underline; cursor:pointer; padding:.3rem .2rem; margin-left:.2rem;
+}
+.done{font-size:.95rem; color:var(--gilt); font-style:italic; min-height:1.4rem}
+details{margin:.4rem 0 .2rem}
+summary{cursor:pointer; color:var(--lapis); font-size:1rem}
+details[open] summary{margin-bottom:.6rem}
+
+/* Litany */
+.litany{list-style:none; margin:0; padding:0}
+.litany li{margin:0 0 .22rem; padding-left:1rem; text-indent:-1rem}
+.litany .r{color:var(--rubric); font-style:italic}
+.litany .gap{margin-top:.8rem}
+
+.sets{display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin:.4rem 0 .5rem}
+.set{
+  font:inherit; text-align:left; cursor:pointer; padding:.6rem .75rem; border-radius:10px;
+  border:1px solid var(--line); background:transparent; color:var(--ink); line-height:1.25;
+  -webkit-tap-highlight-color:transparent;
+}
+.set b{display:block; font-weight:500; font-size:1.08rem}
+.set small{display:block; color:var(--soft); font-size:.92rem; margin-top:.1rem}
+.set[aria-pressed="true"]{border-color:var(--lapis); background:var(--wash); box-shadow:inset 0 0 0 1px var(--lapis)}
+.set[aria-pressed="true"] b{color:var(--lapis)}
+.set:focus-visible{outline:2px solid var(--gilt); outline-offset:2px}
+.setnote{font-size:1rem; color:var(--soft); margin:0 0 1rem; min-height:1.5rem}
+.setnote button{font:inherit; color:var(--lapis); background:none; border:0; padding:0; text-decoration:underline; cursor:pointer}
+.mys{margin:.1rem 0 .7rem}
+.mys .which{color:var(--rubric); font-style:italic; font-size:1rem; display:block}
+.mys .title{font-size:1.3rem; font-weight:500; color:var(--ink); display:block; line-height:1.25; margin:.1rem 0 .2rem}
+.mys .meta{font-size:.98rem; color:var(--soft); display:block}
+
+.end{text-align:center; color:var(--gilt); padding:2.2rem 0 0; font-size:1.4rem}
+.top{
+  position:fixed; right:1rem; bottom:calc(1rem + env(safe-area-inset-bottom,0px));
+  width:2.8rem; height:2.8rem; border-radius:50%; border:1px solid var(--line);
+  background:var(--wash); color:var(--lapis); font:inherit; font-size:1.2rem; cursor:pointer;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.top.show{opacity:1; pointer-events:auto}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+
+/* Print / PDF */
+@page{size:A5; margin:15mm 13mm 17mm}
+@media print{
+  :root{
+    --paper:#FFFFFF; --ink:#1C2440; --soft:#4A5272; --rubric:#9C2F27;
+    --gilt:#A47426; --lapis:#2D4A86; --wash:#ECEFF6; --line:#D5DAE6;
+    padding:0;
+  }
+  body{font-size:11.3pt; line-height:1.5; background:#fff}
+  main{max-width:none; padding:0}
+  .app-only,.top,.beads,.done,details,.reset{display:none!important}
+  .cover{padding-top:22mm; border:0}
+  .toc{break-after:page; border:0}
+  .ours{margin-left:0}
+  section{padding-top:1.1rem}
+  h2,h3{break-after:avoid}
+  .prayer,.decade,.vr,.ours p{break-inside:avoid}
+  .pagebreak{break-before:page}
+  a{color:inherit}
+}
+@media screen{ .print-only{display:none} }
+</style>
+</head>
+<body>
+<main>
+
+<header class="cover" id="top">
+  <div class="cross" aria-hidden="true">✠</div>
+  <h1>The Holy Rosary</h1>
+  <p>of the Blessed Virgin Mary</p>
+  <p class="for">With our petitions for the Physician Licensure Examination in March 2027, for <span class="pposs">my partner’s</span> search for work, and for the souls of our beloved grandparents.</p>
+
+  <div class="setup app-only">
+    <label for="pname">Your partner’s name (fills in the prayers)</label>
+    <input id="pname" type="text" autocomplete="off" placeholder="Type her name">
+    <div class="today" id="today"></div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#s1">1. Sign of the Cross</a></li>
+    <li class="mine"><a href="#s2">2. Opening Petition</a></li>
+    <li><a href="#s3">3. Apostles’ Creed</a></li>
+    <li><a href="#s4">4. Our Father</a></li>
+    <li><a href="#s5">5. Three Hail Marys</a></li>
+    <li><a href="#s6">6. Glory Be</a></li>
+    <li class="mine"><a href="#s7">7. The Mysteries and Decades</a></li>
+    <li><a href="#s8">8. Hail, Holy Queen</a></li>
+    <li><a href="#s9">9. Litany of Loreto</a></li>
+    <li class="mine"><a href="#s10">10. Memorare</a></li>
+    <li class="mine"><a href="#s11">11. For Our Grandparents</a></li>
+    <li class="mine"><a href="#s12">12. Final Invocations</a></li>
+    <li><a href="#s13">13. Closing Prayer</a></li>
+    <li><a href="#s14">14. Sign of the Cross</a></li>
+  </ol>
+  <p class="rubric" style="margin-top:.9rem">Sections in gold carry our own petitions and intentions.</p>
+</nav>
+
+<section id="s1">
+  <h2><span class="n">1</span>Sign of the Cross</h2>
+  <p class="prayer">In the name of the Father, and of the Son, and of the Holy Spirit. Amen.</p>
+</section>
+
+<section id="s2">
+  <h2><span class="n">2</span>Opening Petition</h2>
+  <div class="ours">
+    <p class="mark">Our petition</p>
+    <p>Most Holy Virgin Mary, our Mother, we offer this Rosary through your hands to your Son, Jesus.</p>
+    <p>We pray for my preparation for the Physician Licensure Examination this March 2027, that I may study with focus and understand and retain all that I learn; for <span class="pfull">my partner</span>, that she may find work that is good for her mental health and rewards her well; and for the souls of our beloved grandparents, <span class="names">Daddy Keno and Mommy Aunor Valiente, and Tatay Dadong and Nanay Asyon Dumanig</span>.</p>
+    <p>St. Luke, St. Thomas Aquinas, and St. Joseph the Worker, pray for us. Amen.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <h2><span class="n">3</span>Apostles’ Creed</h2>
+  <p class="prayer">I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead.</p>
+  <p class="prayer">I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.</p>
+</section>
+
+<section id="s4">
+  <h2><span class="n">4</span>Our Father</h2>
+  <p class="prayer">Our Father, who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.</p>
+</section>
+
+<section id="s5">
+  <h2><span class="n">5</span>Three Hail Marys</h2>
+  <p class="rubric">Pray three times, for an increase of faith, hope, and charity.</p>
+  <p class="prayer">Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.</p>
+  <div class="beads app-only" data-group="intro" data-count="3"></div>
+</section>
+
+<section id="s6">
+  <h2><span class="n">6</span>Glory Be</h2>
+  <p class="prayer">Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</section>
+
+<section id="s7" class="pagebreak">
+  <h2><span class="n">7</span>The Mysteries and Decades</h2>
+  <p class="rubric">Today’s mysteries are chosen for you. Tap another set to pray it instead.</p>
+  <div class="sets" role="group" aria-label="Choose the mysteries">
+    <button class="set" data-set="joyful" aria-pressed="false"><b>Joyful</b><small>Monday, Saturday</small></button>
+    <button class="set" data-set="sorrowful" aria-pressed="false"><b>Sorrowful</b><small>Tuesday, Friday</small></button>
+    <button class="set" data-set="glorious" aria-pressed="false"><b>Glorious</b><small>Wednesday, Sunday</small></button>
+    <button class="set" data-set="luminous" aria-pressed="false"><b>Luminous</b><small>Thursday</small></button>
+  </div>
+  <p class="setnote" id="setnote" aria-live="polite"></p>
+  <p class="rubric">For each decade: announce the mystery, offer our intention, then pray one Our Father, ten Hail Marys, the Glory Be, and the Fatima Prayer. If you wish, add the Eternal Rest for our grandparents.</p>
+
+  <h3>The prayers of each decade</h3>
+  <p class="prayer"><b>Our Father,</b> who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.</p>
+  <p class="prayer"><b>Hail Mary,</b> full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen. <span class="rubric">(ten times)</span></p>
+  <p class="prayer"><b>Glory be</b> to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+  <p class="prayer"><b>Fatima Prayer.</b> O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to heaven, especially those in most need of thy mercy.</p>
+  <div class="ours">
+    <p class="mark">Optional, for our grandparents</p>
+    <p class="prayer">Eternal rest grant unto Daddy Keno, Mommy Aunor, Tatay Dadong, and Nanay Asyon, O Lord, and let perpetual light shine upon them.</p>
+  </div>
+
+  <div id="decades"></div>
+</section>
+
+<section id="s8" class="pagebreak">
+  <h2><span class="n">8</span>Hail, Holy Queen</h2>
+  <p class="prayer">Hail, holy Queen, Mother of mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us; and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.</p>
+</section>
+
+<section id="s9">
+  <h2><span class="n">9</span>Litany of the Blessed Virgin Mary</h2>
+  <p class="rubric">The leader prays each invocation; all answer in red.</p>
+  <ul class="litany" id="litany"></ul>
+  <p class="vr" style="margin-top:1rem"><b>V.</b> Pray for us, O holy Mother of God.</p>
+  <p class="vr"><b>R.</b> That we may be made worthy of the promises of Christ.</p>
+</section>
+
+<section id="s10">
+  <h2><span class="n">10</span>Memorare</h2>
+  <div class="ours">
+    <p class="prayer">Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection, implored thy help, or sought thine intercession was left unaided. Inspired by this confidence, I fly unto thee, O Virgin of virgins, my Mother. To thee do I come, before thee I stand, sinful and sorrowful. O Mother of the Word Incarnate, despise not my petitions, but in thy mercy hear and answer me. Amen.</p>
+  </div>
+</section>
+
+<section id="s11">
+  <h2><span class="n">11</span>For Our Grandparents</h2>
+  <div class="ours">
+    <p class="mark">Our intention for the faithful departed</p>
+    <p>Lord, we remember with love <span class="names">Daddy Keno and Mommy Aunor Valiente, and Tatay Dadong and Nanay Asyon Dumanig</span>. We believe they still walk with us, and we ask that from Your presence they may watch over us in this season of studying and searching.</p>
+    <p class="vr"><b>V.</b> Eternal rest grant unto them, O Lord,</p>
+    <p class="vr"><b>R.</b> and let perpetual light shine upon them.</p>
+    <p class="vr"><b>V.</b> May they rest in peace.</p>
+    <p class="vr"><b>R.</b> Amen.</p>
+    <p style="margin-top:.6rem">May their souls, and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.</p>
+  </div>
+</section>
+
+<section id="s12">
+  <h2><span class="n">12</span>Final Invocations</h2>
+  <div class="ours">
+    <p class="vr">St. Luke, patron of physicians, <span class="rubric">pray for us.</span></p>
+    <p class="vr">St. Thomas Aquinas, patron of students, <span class="rubric">pray for us.</span></p>
+    <p class="vr">St. Joseph the Worker, <span class="rubric">pray for us.</span></p>
+    <p class="vr">Most Sacred Heart of Jesus, <span class="rubric">we place all our trust in You.</span></p>
+  </div>
+</section>
+
+<section id="s13">
+  <h2><span class="n">13</span>Closing Prayer</h2>
+  <p class="rubric">Let us pray.</p>
+  <p class="prayer">O God, whose only begotten Son, by His life, death, and resurrection, has purchased for us the rewards of eternal life; grant, we beseech Thee, that meditating upon these mysteries of the Most Holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen.</p>
+</section>
+
+<section id="s14">
+  <h2><span class="n">14</span>Sign of the Cross</h2>
+  <p class="prayer">In the name of the Father, and of the Son, and of the Holy Spirit. Amen.</p>
+  <div class="end" aria-hidden="true">✠</div>
+</section>
+
+</main>
+<button class="top app-only" id="toTop" aria-label="Back to contents">↑</button>
+
+<script>
+(function(){
+  // Decades
+  var intentions = [
+    "For the gift of focus and discipline in my daily review, that I may use my study time faithfully and wisely.",
+    "For understanding and retention, that the Holy Spirit may open my mind to grasp what I read and keep it in memory when I need it most.",
+    "For <span class=\"pposs\">my partner’s</span> job search, that doors may open to work that values her, protects her peace of mind, and provides well for her needs.",
+    "For both of us in our waiting, that we may be patient, support each other, and guard our health and mental well-being through this season.",
+    "For trust and surrender, that on exam day I may be calm and clear-minded, that she may receive good news in God’s time, and that we accept His will with grateful hearts."
+  ];
+  var ord = ["First","Second","Third","Fourth","Fifth"];
+  var prayers = document.querySelectorAll('#s7 > .prayer');
+  var html = "";
+  intentions.forEach(function(t,i){
+    html += '<div class="decade">' +
+      '<h3>' + ord[i] + ' Decade</h3>' +
+      '<p class="mys" data-i="' + i + '"><span class="which"></span><span class="title"></span><span class="meta"></span></p>' +
+      '<div class="ours"><p class="mark">Our intention</p><p class="intent">' + t + '</p></div>' +
+      '<p class="seq">Our Father, ten Hail Marys, Glory Be, Fatima Prayer, and Eternal Rest if you wish.</p>' +
+      '<div class="beads app-only" data-group="d' + i + '" data-count="10" data-pater="1"></div>' +
+      '<div class="done app-only" aria-live="polite"></div>' +
+      '<details class="app-only"><summary>Show the prayers</summary><div class="inner"></div></details>' +
+      '</div>';
+  });
+  var host = document.getElementById('decades');
+  host.innerHTML = html;
+  host.querySelectorAll('details .inner').forEach(function(box){
+    prayers.forEach(function(p){ box.appendChild(p.cloneNode(true)); });
+  });
+
+  // Litany
+  var lit = [
+    ["Lord, have mercy.","Christ, have mercy."],["Christ, have mercy.","Christ, have mercy."],["Lord, have mercy.","Lord, have mercy."],
+    ["Christ, hear us.","Christ, graciously hear us."],
+    ["God the Father of heaven,","have mercy on us."],["God the Son, Redeemer of the world,","have mercy on us."],
+    ["God the Holy Spirit,","have mercy on us."],["Holy Trinity, one God,","have mercy on us."]
+  ];
+  var mary = ["Holy Mary","Holy Mother of God","Holy Virgin of virgins","Mother of Christ","Mother of the Church","Mother of mercy","Mother of divine grace","Mother of hope","Mother most pure","Mother most chaste","Mother inviolate","Mother undefiled","Mother most amiable","Mother most admirable","Mother of good counsel","Mother of our Creator","Mother of our Saviour","Virgin most prudent","Virgin most venerable","Virgin most renowned","Virgin most powerful","Virgin most merciful","Virgin most faithful","Mirror of justice","Seat of wisdom","Cause of our joy","Spiritual vessel","Vessel of honour","Singular vessel of devotion","Mystical rose","Tower of David","Tower of ivory","House of gold","Ark of the covenant","Gate of heaven","Morning star","Health of the sick","Refuge of sinners","Solace of migrants","Comfort of the afflicted","Help of Christians","Queen of Angels","Queen of Patriarchs","Queen of Prophets","Queen of Apostles","Queen of Martyrs","Queen of Confessors","Queen of Virgins","Queen of all Saints","Queen conceived without original sin","Queen assumed into heaven","Queen of the most holy Rosary","Queen of families","Queen of peace"];
+  var lamb = [["Lamb of God, who takes away the sins of the world,","spare us, O Lord."],["Lamb of God, who takes away the sins of the world,","graciously hear us, O Lord."],["Lamb of God, who takes away the sins of the world,","have mercy on us."]];
+  var L = "";
+  lit.forEach(function(x){ L += '<li>' + x[0] + ' <span class="r">' + x[1] + '</span></li>'; });
+  mary.forEach(function(m,i){ L += '<li' + (i===0?' class="gap"':'') + '>' + m + ', <span class="r">pray for us.</span></li>'; });
+  lamb.forEach(function(x,i){ L += '<li' + (i===0?' class="gap"':'') + '>' + x[0] + ' <span class="r">' + x[1] + '</span></li>'; });
+  document.getElementById('litany').innerHTML = L;
+
+  // Partner name
+  var input = document.getElementById('pname');
+  function applyName(n){
+    n = (n||"").trim();
+    document.querySelectorAll('.pfull').forEach(function(e){ e.textContent = n ? "my partner, " + n : "my partner"; });
+    document.querySelectorAll('.pname').forEach(function(e){ e.textContent = n || "my partner"; });
+    document.querySelectorAll('.pposs').forEach(function(e){ e.textContent = n ? n + "’s" : "my partner’s"; });
+  }
+  var saved = "";
+  try { saved = localStorage.getItem('rosary-partner') || ""; } catch(e){}
+  input.value = saved; applyName(saved);
+  input.addEventListener('input', function(){
+    applyName(input.value);
+    try { localStorage.setItem('rosary-partner', input.value.trim()); } catch(e){}
+  });
+
+  // Mysteries
+  var MYS = {
+    joyful: {name:"Joyful", list:[
+      ["The Annunciation","Luke 1:26–38","Humility"],
+      ["The Visitation","Luke 1:39–56","Love of neighbor"],
+      ["The Nativity of Our Lord","Luke 2:1–20","Poverty of spirit"],
+      ["The Presentation in the Temple","Luke 2:22–38","Obedience"],
+      ["The Finding of Jesus in the Temple","Luke 2:41–52","Joy in finding Jesus"]]},
+    sorrowful: {name:"Sorrowful", list:[
+      ["The Agony in the Garden","Matthew 26:36–46","Conformity to God’s will"],
+      ["The Scourging at the Pillar","Matthew 27:26","Purity"],
+      ["The Crowning with Thorns","Matthew 27:27–31","Moral courage"],
+      ["The Carrying of the Cross","John 19:16–17","Patience"],
+      ["The Crucifixion and Death of Our Lord","Luke 23:33–46","Perseverance"]]},
+    glorious: {name:"Glorious", list:[
+      ["The Resurrection","Matthew 28:1–10","Faith"],
+      ["The Ascension","Acts 1:6–11","Hope"],
+      ["The Descent of the Holy Spirit","Acts 2:1–13","Wisdom and love of God"],
+      ["The Assumption of Mary","Revelation 11:19–12:1","Devotion to Mary"],
+      ["The Coronation of Mary","Revelation 12:1","Trust in Mary’s intercession"]]},
+    luminous: {name:"Luminous", list:[
+      ["The Baptism of the Lord","Matthew 3:13–17","Openness to the Holy Spirit"],
+      ["The Wedding at Cana","John 2:1–12","To Jesus through Mary"],
+      ["The Proclamation of the Kingdom","Mark 1:14–15","Repentance and trust in God"],
+      ["The Transfiguration","Matthew 17:1–8","Desire for holiness"],
+      ["The Institution of the Eucharist","Matthew 26:26–28","Adoration"]]}
+  };
+  var BYDAY = ["glorious","joyful","sorrowful","glorious","luminous","sorrowful","joyful"];
+  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var ordL = ["first","second","third","fourth","fifth"];
+  var d = new Date().getDay(), todaySet = BYDAY[d];
+
+  function showSet(key){
+    var set = MYS[key];
+    document.querySelectorAll('.set').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.set === key); });
+    document.querySelectorAll('.mys').forEach(function(p){
+      var i = +p.dataset.i, m = set.list[i];
+      p.querySelector('.which').textContent = "The " + ordL[i] + " " + set.name + " Mystery";
+      p.querySelector('.title').textContent = m[0];
+      p.querySelector('.meta').textContent = m[1] + ". Fruit of the mystery: " + m[2].charAt(0).toLowerCase() + m[2].slice(1) + ".";
+    });
+    var note = document.getElementById('setnote');
+    if(key === todaySet){
+      note.textContent = "Praying the " + set.name + " Mysteries for " + DAYS[d] + ".";
+    } else {
+      note.innerHTML = "Praying the " + set.name + " Mysteries. <button type=\"button\" id=\"backToday\">Back to today’s</button>";
+      document.getElementById('backToday').onclick = function(){ showSet(todaySet); };
+    }
+    document.getElementById('today').innerHTML = "Today is " + DAYS[d] + ": the <b>" + MYS[todaySet].name + " Mysteries</b>." +
+      (key !== todaySet ? " You chose the " + set.name + " Mysteries." : "");
+    document.querySelectorAll('.beads[data-pater] .bead').forEach(function(b){ b.classList.remove('on'); });
+    document.querySelectorAll('.done').forEach(function(x){ x.textContent = ""; });
+  }
+  document.querySelectorAll('.set').forEach(function(b){
+    b.addEventListener('click', function(){ showSet(b.dataset.set); });
+  });
+
+  // Bead counters
+  document.querySelectorAll('.beads').forEach(function(box){
+    var n = +box.getAttribute('data-count'), pater = box.hasAttribute('data-pater');
+    var done = box.nextElementSibling && box.nextElementSibling.classList.contains('done') ? box.nextElementSibling : null;
+    var beads = [];
+    if(pater){ var p = document.createElement('button'); p.className='bead pater'; p.setAttribute('aria-label','Our Father'); beads.push(p); box.appendChild(p); }
+    for(var i=1;i<=n;i++){ var b=document.createElement('button'); b.className='bead'; b.textContent=i; b.setAttribute('aria-label','Hail Mary '+i); beads.push(b); box.appendChild(b); }
+    var r = document.createElement('button'); r.className='reset'; r.textContent='Reset'; box.appendChild(r);
+    function upd(){
+      var on = beads.filter(function(b){return b.classList.contains('on');}).length;
+      if(done) done.textContent = on === beads.length ? "Decade complete. Glory Be, Fatima Prayer." : "";
+    }
+    beads.forEach(function(b,idx){
+      b.addEventListener('click', function(){
+        var turnOn = !b.classList.contains('on');
+        beads.forEach(function(x,j){ x.classList.toggle('on', turnOn ? j<=idx : j<idx); x.setAttribute('aria-pressed', x.classList.contains('on')); });
+        upd();
+      });
+    });
+    r.addEventListener('click', function(){ beads.forEach(function(x){x.classList.remove('on');}); upd(); });
+  });
+
+  showSet(todaySet);
+  // Re-check the day when the app is reopened on a later day
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible'){
+      var nd = new Date().getDay();
+      if(nd !== d){ d = nd; todaySet = BYDAY[d]; showSet(todaySet); }
+    }
+  });
+
+  // Contents links and back to top
+  document.querySelectorAll('.toc a').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      ev.preventDefault();
+      var t = document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto':'smooth'});
+    });
+  });
+  var top = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){ top.classList.toggle('show', window.scrollY > 900); }, {passive:true});
+  top.addEventListener('click', function(){ document.querySelector('.toc').scrollIntoView({behavior:'smooth'}); });
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
+</body>
+</html>
